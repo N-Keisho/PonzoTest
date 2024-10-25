@@ -9,9 +9,10 @@ public class TestManager : MonoBehaviour
     public GameObject Mask;
     public GameObject imgManager;
     public GameObject CSVExporter;
+    public Button btn;
     public ToggleGroup toggleGroup;
     public List<Question> questions;
-    public IEnumerable<Toggle>  toggle;
+    private IEnumerable<Toggle>  toggle;
     private ImageManager imageManager;
     private CSVExporter exporter;
     private bool isFinish = false;
@@ -21,6 +22,18 @@ public class TestManager : MonoBehaviour
         imageManager = imgManager.GetComponent<ImageManager>();
         exporter = CSVExporter.GetComponent<CSVExporter>();
         Mask.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (toggleGroup.AnyTogglesOn())
+        {
+            btn.interactable = true;
+        }
+        else
+        {
+            btn.interactable = false;
+        }
     }
 
     public void Submit()
@@ -66,6 +79,11 @@ public class TestManager : MonoBehaviour
     }
 
     private void Save(){
+        string id = PlayerPrefs.GetString("ID", "Nan");
+        DateTime dt = DateTime.Now;
+        string date = dt.ToString("yyyy/MM/dd HH:mm:ss");
+        exporter.WriteToFile("ID," + id);
+        exporter.WriteToFile("Date," + date);
         exporter.WriteToFile("order,angle,position,calibration,modulus,answer");
         int i = 1;
         foreach (Question item in questions)
@@ -74,8 +92,6 @@ public class TestManager : MonoBehaviour
             exporter.WriteToFile(data);
             i++;
         }
-        DateTime dt = DateTime.Now;
-        string date = dt.ToString("yyyy/MM/dd HH:mm:ss");
-        exporter.WriteToFile("Date," + date);
+        
     }
 }

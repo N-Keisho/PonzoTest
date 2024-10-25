@@ -20,6 +20,7 @@ public class CSVExporter : MonoBehaviour {
         #endif 
 
         fileName = PlayerPrefs.GetString("ID", "Nan") + extension;
+        Debug.Log("File Name: " + fileName);
         filePath = Path.Combine(dirPath, fileName);
     }
 
