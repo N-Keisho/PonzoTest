@@ -11,6 +11,7 @@ public class TestManager : MonoBehaviour
     public GameObject CSVExporter;
     public Button btn;
     public ToggleGroup toggleGroup;
+    public float waitTime = 1f;
     public List<Question> questions;
     private IEnumerable<Toggle>  toggle;
     private ImageManager imageManager;
@@ -21,7 +22,7 @@ public class TestManager : MonoBehaviour
     {
         imageManager = imgManager.GetComponent<ImageManager>();
         exporter = CSVExporter.GetComponent<CSVExporter>();
-        Mask.SetActive(false);
+        StartCoroutine(FirstQuestion());
     }
 
     void Update()
@@ -49,6 +50,13 @@ public class TestManager : MonoBehaviour
         }
     }
 
+    private IEnumerator FirstQuestion()
+    {
+        Mask.SetActive(true);
+        yield return new WaitForSeconds(waitTime);
+        Mask.SetActive(false);
+    }
+
     private IEnumerator NextQuestion()
     {
         Mask.SetActive(true);
@@ -62,13 +70,13 @@ public class TestManager : MonoBehaviour
         }
         toggleGroup.SetAllTogglesOff();
         imageManager.NextImage();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(waitTime/2);
         if (isFinish)
         {
             Save();
             SceneManager.LoadScene("Finish");
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(waitTime/2);
         Mask.SetActive(false);
     }
 
