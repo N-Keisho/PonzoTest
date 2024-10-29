@@ -89,9 +89,10 @@ public class TestManager : MonoBehaviour
     private void Save(){
         string id = PlayerPrefs.GetString("ID", "Nan");
         DateTime dt = DateTime.Now;
-        string date = dt.ToString("yyyy/MM/dd HH:mm:ss");
+        string date = dt.ToString("yyyy-MM-dd-HH-mm-ss");
         exporter.WriteToFile("ID," + id);
-        exporter.WriteToFile("Date," + date);
+        exporter.WriteToFile("Start," + exporter.start);
+        exporter.WriteToFile("Finish," + date);
         exporter.WriteToFile("order,angle,position,calibration,modulus,answer");
         int i = 1;
         foreach (Question item in questions)

@@ -38,4 +38,8 @@ public class Topscript : MonoBehaviour
         }
         SceneManager.LoadScene(sceneName);
     }
+
+    public void LoadTestPlay(){
+        SceneManager.LoadScene("TestPlay");
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Text;
+using System;
 
 public class CSVExporter : MonoBehaviour {
     private string dirPath;
@@ -10,6 +11,7 @@ public class CSVExporter : MonoBehaviour {
     private string dirName = "Results";
     private string extension = ".csv";
     private string fileName = "";
+    public string start = "";
 
     private void Start() {
         // 実行環境に応じてCSVファイルのパスを設定 
@@ -18,8 +20,9 @@ public class CSVExporter : MonoBehaviour {
         #else 
         dirPath = Path.Combine(Path.GetDirectoryName(Application.dataPath), dirName); 
         #endif 
-
-        fileName = PlayerPrefs.GetString("ID", "Nan") + extension;
+        DateTime dt = DateTime.Now;
+        start = dt.ToString("yyyy-MM-dd-HH-mm-ss");
+        fileName = PlayerPrefs.GetString("ID", "Nan") + "_" + start + extension;
         filePath = Path.Combine(dirPath, fileName);
     }
 
